@@ -8,3 +8,4 @@ C:\Users\danil\Desktop\appunti franzi (4)\metropolitana\metropolitana\obj\Debug\
 C:\Users\danil\Desktop\appunti franzi (4)\metropolitana\metropolitana\obj\Debug\metropolitana.csproj.CoreCompileInputs.cache
 C:\Users\danil\Desktop\appunti franzi (4)\metropolitana\metropolitana\obj\Debug\metropolitana.exe
 C:\Users\danil\Desktop\appunti franzi (4)\metropolitana\metropolitana\obj\Debug\metropolitana.pdb
+C:\Users\danil\Desktop\appunti franzi (4)\metropolitana\metropolitana\obj\Debug\metropolitana.VisualStazione.resources
