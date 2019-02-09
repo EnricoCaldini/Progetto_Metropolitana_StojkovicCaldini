@@ -11,6 +11,9 @@ namespace metropolitana
         public int x;
         public int y;
         public string nome;
+        public object pic;
+        public object lab;
+        public bool selected = false;
 
         public Stazione(int x, int y)
         {

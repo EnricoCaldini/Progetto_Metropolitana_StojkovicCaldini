@@ -30,6 +30,7 @@
         {
             this.labelX = new System.Windows.Forms.Label();
             this.labelY = new System.Windows.Forms.Label();
+            this.labelNome = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // labelX
@@ -50,11 +51,21 @@
             this.labelY.TabIndex = 0;
             this.labelY.Text = "Y: ";
             // 
+            // labelNome
+            // 
+            this.labelNome.AutoSize = true;
+            this.labelNome.Location = new System.Drawing.Point(24, 130);
+            this.labelNome.Name = "labelNome";
+            this.labelNome.Size = new System.Drawing.Size(53, 17);
+            this.labelNome.TabIndex = 0;
+            this.labelNome.Text = "Nome: ";
+            // 
             // VisualStazione
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.labelNome);
             this.Controls.Add(this.labelY);
             this.Controls.Add(this.labelX);
             this.Name = "VisualStazione";
@@ -68,5 +79,6 @@
 
         private System.Windows.Forms.Label labelX;
         private System.Windows.Forms.Label labelY;
+        private System.Windows.Forms.Label labelNome;
     }
 }

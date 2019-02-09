@@ -38,19 +38,52 @@ namespace metropolitana
                     BackgroundImageLayout = ImageLayout.Zoom,
                 };
                 picture.MouseClick += stazioneClick;
+                picture.MouseDown += stazioneDownUp;
+                picture.MouseMove += stazioneMove;
+                picture.MouseUp += stazioneDownUp;
                 panel1.Controls.Add(picture);
                 picture.Tag = staz.Count;
                 staz.Add(new Stazione(x + 25, y + 25));
+                staz[staz.Count - 1].pic = picture;
+                Dettagli det = new Dettagli(staz[staz.Count - 1]);
+                det.ShowDialog();
+                Label a = new Label
+                {
+                    Name = "labelA",
+                    Location = new Point(x, y + 53),
+                    Text = staz[staz.Count - 1].nome,
+                    Font = new Font("Calibri", 8),
+                    Size = new Size(50, 10),
+                    TextAlign = ContentAlignment.MiddleCenter
+                };
+                panel1.Controls.Add(a);
+                staz[staz.Count - 1].lab = a;
             }
+        }
+
+        private void stazioneMove(object sender, MouseEventArgs e)
+        {
+            PictureBox a = (PictureBox)sender;
+            if (staz[Convert.ToInt32(a.Tag)].selected && createStation)
+            {
+                ((PictureBox)staz[Convert.ToInt32(a.Tag)].pic).Location = new Point(Cursor.Position.X - 38, Cursor.Position.Y - 140);
+                ((Label)staz[Convert.ToInt32(a.Tag)].lab).Location = new Point(Cursor.Position.X - 38, Cursor.Position.Y - 87);
+            }
+        }
+
+        private void stazioneDownUp(object sender, MouseEventArgs e)
+        {
+            PictureBox a = (PictureBox)sender;
+            staz[Convert.ToInt32(a.Tag)].selected = !staz[Convert.ToInt32(a.Tag)].selected;
         }
 
         private void stazioneClick(object sender, MouseEventArgs e)
         {
             PictureBox pic2 = (PictureBox)sender;
             Stazione sel = staz[Convert.ToInt32(pic2.Tag)];
-            pic2.BackgroundImage = Image.FromFile("42534-metro-iconSel.png");
             if (createLink)
             {
+                pic2.BackgroundImage = Image.FromFile("42534-metro-iconSel.png");
                 if (uno == null)
                 {
                     uno = sel;

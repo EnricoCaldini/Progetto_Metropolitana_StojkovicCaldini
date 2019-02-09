@@ -9,3 +9,4 @@ C:\Users\danil\Desktop\appunti franzi (4)\metropolitana\metropolitana\obj\Debug\
 C:\Users\danil\Desktop\appunti franzi (4)\metropolitana\metropolitana\obj\Debug\metropolitana.exe
 C:\Users\danil\Desktop\appunti franzi (4)\metropolitana\metropolitana\obj\Debug\metropolitana.pdb
 C:\Users\danil\Desktop\appunti franzi (4)\metropolitana\metropolitana\obj\Debug\metropolitana.VisualStazione.resources
+C:\Users\danil\Desktop\appunti franzi (4)\metropolitana\metropolitana\obj\Debug\metropolitana.Dettagli.resources

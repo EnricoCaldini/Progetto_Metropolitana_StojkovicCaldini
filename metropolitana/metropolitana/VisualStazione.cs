@@ -17,6 +17,7 @@ namespace metropolitana
             InitializeComponent();
             labelX.Text += s.x;
             labelY.Text += s.y;
+            labelNome.Text += s.nome;
         }
     }
 }
