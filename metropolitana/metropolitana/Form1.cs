@@ -66,7 +66,10 @@ namespace metropolitana
             PictureBox a = (PictureBox)sender;
             if (staz[Convert.ToInt32(a.Tag)].selected && createStation)
             {
-                ((PictureBox)staz[Convert.ToInt32(a.Tag)].pic).Location = new Point(Cursor.Position.X - 38, Cursor.Position.Y - 140);
+                int x = Cursor.Position.X - 38, y = Cursor.Position.Y - 140;
+                ((PictureBox)staz[Convert.ToInt32(a.Tag)].pic).Location = new Point(x, y);
+                staz[Convert.ToInt32(a.Tag)].x = x + 25;
+                staz[Convert.ToInt32(a.Tag)].y = y + 25;
                 ((Label)staz[Convert.ToInt32(a.Tag)].lab).Location = new Point(Cursor.Position.X - 38, Cursor.Position.Y - 87);
             }
         }
