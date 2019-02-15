@@ -13,6 +13,8 @@ namespace metropolitana
     public partial class Dettagli : Form
     {
         TextBox txtbx;
+        ComboBox box;
+        List<Color> listaColori;
         int switchint = 0;
         object ogg;
 
@@ -20,6 +22,45 @@ namespace metropolitana
         {
             InitializeComponent();
             ogg = staz;
+            funzione("Nome Stazione: ");
+        }
+
+        public Dettagli(Link linchino)
+        {
+            InitializeComponent();
+            ogg = linchino;
+            switchint = 1;
+            funzione("Distanza tra " + linchino.prtnz.nome + " e " + linchino.rrv.nome + ":");
+        }
+
+        public Dettagli(Linea lineetta, List<Color> listaColori)
+        {
+            InitializeComponent();
+            this.listaColori = listaColori;
+            ogg = lineetta;
+            switchint = 2;
+            Label a = new Label
+            {
+                Name = "labelA",
+                Location = new Point(10, 30),
+                Text = "Colore Linea: ",
+                Font = new Font("Calibri", 11),
+                Size = new Size(120, 20)
+            };
+            Controls.Add(a);
+            box = new ComboBox
+            {
+                Name = "ComboBoxA",
+                Location = new Point(120, 27),
+                Font = new Font("Calibri", 11)
+            };
+            foreach (Color col in listaColori)
+                box.Items.Add(col.Name);
+            Controls.Add(box);
+        }
+        
+        private void funzione(string nomeLabel)
+        {
             txtbx = new TextBox
             {
                 Location = new Point(120, 27),
@@ -31,7 +72,7 @@ namespace metropolitana
             {
                 Name = "labelA",
                 Location = new Point(10, 30),
-                Text = "Nome Stazione: ",
+                Text = nomeLabel,
                 Font = new Font("Calibri", 11),
                 Size = new Size(120, 20)
             };
@@ -40,17 +81,29 @@ namespace metropolitana
 
         private void btnConf_Click(object sender, EventArgs e)
         {
-            switch (switchint)
+            if (txtbx.Text == "")
+                MessageBox.Show("Compilare i campi");
+            else
             {
-                case 0:
-                    if (txtbx.Text != "")
-                        ((Stazione)ogg).nome = txtbx.Text;
-                    else
-                        MessageBox.Show("Inserire nome stazione");
-                    break;
-                default: break;
+                switch (switchint)
+                {
+                    case 0: ((Stazione)ogg).nome = txtbx.Text; break;
+                    case 1:
+                        try
+                        {
+                            ((Link)ogg).dstnz = Convert.ToInt32(txtbx.Text);
+                        }
+                        catch
+                        {
+                            MessageBox.Show("Deve essere un intero");
+                            return;
+                        }
+                        break;
+                    case 2: ((Linea)ogg).c = listaColori[box.SelectedIndex];
+                        listaColori.RemoveAt(box.SelectedIndex); break;
+                }
+                Close();
             }
-            Close();
         }
     }
 }

@@ -11,6 +11,7 @@ namespace metropolitana
         public int x;
         public int y;
         public string nome;
+        public List<Link> linx = new List<Link>();
         public object pic;
         public object lab;
         public bool selected = false;

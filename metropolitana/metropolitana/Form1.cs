@@ -8,6 +8,10 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+
+
+//cose da fare: creare colore pubblico quando selezioni la linea
+
 namespace metropolitana
 {
     public partial class Form1 : Form
@@ -15,8 +19,10 @@ namespace metropolitana
         bool createStation = false;
         bool createLink = false;
         List<Stazione> staz = new List<Stazione>();
+        List<Linea> linee = new List<Linea>();
         Stazione uno = null;
         PictureBox pic;
+        List<Color> colori = new List<Color> { Color.Black, Color.Gray, Color.Red, Color.Blue, Color.Cyan, Color.Brown, Color.Pink, Color.Purple, Color.Orange, Color.Green, Color.DarkSeaGreen, Color.LightGoldenrodYellow, Color.YellowGreen, Color.Violet, Color.Navy };
 
         public Form1()
         {
@@ -78,6 +84,13 @@ namespace metropolitana
         {
             PictureBox a = (PictureBox)sender;
             staz[Convert.ToInt32(a.Tag)].selected = !staz[Convert.ToInt32(a.Tag)].selected;
+            Graphics gs = panel1.CreateGraphics();
+            Pen pn = new Pen(Color.Cyan, 3);
+            if (staz[Convert.ToInt32(a.Tag)].selected)
+                pn.Color = Color.Beige;
+            foreach(Stazione stz in staz)
+                foreach(Link linc in stz.linx)
+                    gs.DrawLine(pn, linc.prtnz.x, linc.prtnz.y, linc.rrv.x, linc.rrv.y);
         }
 
         private void stazioneClick(object sender, MouseEventArgs e)
@@ -97,9 +110,19 @@ namespace metropolitana
                     Graphics gs = panel1.CreateGraphics();
                     Pen pn = new Pen(Color.Cyan, 3);
                     gs.DrawLine(pn, uno.x, uno.y, sel.x, sel.y);
-                    uno = null;
                     pic.BackgroundImage = Image.FromFile("42534-metro-icon.png");
                     pic2.BackgroundImage = Image.FromFile("42534-metro-icon.png");
+                    if (uno.nome != sel.nome)
+                    {
+                        Link lino = new Link(uno, sel, 10);
+                        Dettagli det = new Dettagli(lino);
+                        det.ShowDialog();
+                        uno.linx.Add(lino);
+                        sel.linx.Add(lino);
+                        uno = null;
+                    }
+                    else
+                        MessageBox.Show("Non puoi collegare una stazione a stazione");
                 }
             }
             else if(!createStation)
@@ -121,10 +144,12 @@ namespace metropolitana
                 createLink = false;
             }
             createStation = !createStation;
+            annullaVerde();
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
+            comboBoxLinea.Visible = !comboBoxLinea.Visible;
             if (createLink)
             {
                 button2.BackColor = Color.White;
@@ -135,8 +160,25 @@ namespace metropolitana
                 button2.BackColor = Color.DarkGray;
                 button1.BackColor = Color.White;
                 createStation = false;
+                foreach(Linea lin in linee)
+                    comboBoxLinea.Items.Add(lin.c);
             }
             createLink = !createLink;
+            if (!createLink)
+                annullaVerde();
+        }
+
+        private void annullaVerde()
+        {
+            foreach (Stazione stz in staz)
+                ((PictureBox)stz.pic).BackgroundImage = Image.FromFile("42534-metro-icon.png");
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            Linea lin = new Linea(Color.Black);
+            Dettagli det = new Dettagli(lin, colori);
+            det.ShowDialog();
         }
     }
 }
