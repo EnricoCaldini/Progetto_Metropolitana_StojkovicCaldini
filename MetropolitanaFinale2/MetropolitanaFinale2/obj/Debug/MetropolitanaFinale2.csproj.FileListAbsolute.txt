@@ -1,0 +1,12 @@
+C:\Users\danil\Desktop\appunti franzi (4)\MetropolitanaFinale2\MetropolitanaFinale2\obj\Debug\MetropolitanaFinale2.csprojAssemblyReference.cache
+C:\Users\danil\Desktop\appunti franzi (4)\MetropolitanaFinale2\MetropolitanaFinale2\obj\Debug\MetropolitanaFinale2.Form1.resources
+C:\Users\danil\Desktop\appunti franzi (4)\MetropolitanaFinale2\MetropolitanaFinale2\obj\Debug\MetropolitanaFinale2.Properties.Resources.resources
+C:\Users\danil\Desktop\appunti franzi (4)\MetropolitanaFinale2\MetropolitanaFinale2\obj\Debug\MetropolitanaFinale2.csproj.GenerateResource.cache
+C:\Users\danil\Desktop\appunti franzi (4)\MetropolitanaFinale2\MetropolitanaFinale2\obj\Debug\MetropolitanaFinale2.csproj.CoreCompileInputs.cache
+C:\Users\danil\Desktop\appunti franzi (4)\MetropolitanaFinale2\MetropolitanaFinale2\bin\Debug\MetropolitanaFinale2.exe.config
+C:\Users\danil\Desktop\appunti franzi (4)\MetropolitanaFinale2\MetropolitanaFinale2\bin\Debug\MetropolitanaFinale2.exe
+C:\Users\danil\Desktop\appunti franzi (4)\MetropolitanaFinale2\MetropolitanaFinale2\bin\Debug\MetropolitanaFinale2.pdb
+C:\Users\danil\Desktop\appunti franzi (4)\MetropolitanaFinale2\MetropolitanaFinale2\obj\Debug\MetropolitanaFinale2.Dettagli.resources
+C:\Users\danil\Desktop\appunti franzi (4)\MetropolitanaFinale2\MetropolitanaFinale2\obj\Debug\MetropolitanaFinale2.VisualStazione.resources
+C:\Users\danil\Desktop\appunti franzi (4)\MetropolitanaFinale2\MetropolitanaFinale2\obj\Debug\MetropolitanaFinale2.exe
+C:\Users\danil\Desktop\appunti franzi (4)\MetropolitanaFinale2\MetropolitanaFinale2\obj\Debug\MetropolitanaFinale2.pdb
