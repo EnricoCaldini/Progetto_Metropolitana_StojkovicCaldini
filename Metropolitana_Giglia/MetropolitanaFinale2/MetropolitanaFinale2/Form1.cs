@@ -7,11 +7,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using MySql.Data.MySqlClient;
 
 namespace MetropolitanaFinale2
 {
     public partial class Form1 : Form
     {
+        MySqlConnection Connessione;
         bool createStation = false;
         bool createLink = false;
         List<Stazione> staz = new List<Stazione>();
@@ -23,6 +25,72 @@ namespace MetropolitanaFinale2
         public Form1()
         {
             InitializeComponent();
+            Connessione = new MySqlConnection("Server=127.0.0.1;Port=3306;user=root;Database=metro;Password=root;charset=utf8;");
+            Connessione.Open();
+            caricaMappe();
+            if (comboBoxMappe.Items.Count > 0)
+            {
+                comboBoxMappe.SelectedIndex = 0;
+                disegnaStazioni();
+            }
+        }
+
+        private void disegnaStazioni()
+        {
+            MySqlCommand comando = new MySqlCommand("SELECT Nome, CONCAT(x, ''), CONCAT(y, '') FROM stazione WHERE idMappa = " + comboBoxMappe.SelectedItem, Connessione);
+            MySqlDataAdapter adapt = new MySqlDataAdapter(comando);
+            DataTable dt = new DataTable();
+            adapt.Fill(dt);
+            foreach (DataRow a in dt.Rows)
+            {
+                staz.Add(new Stazione(Convert.ToInt32(a[1]), Convert.ToInt32(a[2])));
+                staz[staz.Count - 1].nome = a[0].ToString();
+                DrawStation(staz[staz.Count - 1].x, staz[staz.Count - 1].y, staz[staz.Count - 1].nome);
+            }
+            comando = new MySqlCommand("SELECT Colore FROM linea WHERE idMappa = " + comboBoxMappe.SelectedItem, Connessione);
+            adapt = new MySqlDataAdapter(comando);
+            dt.Clear();
+            adapt.Fill(dt);
+            foreach(DataRow a in dt.Rows)
+                for(int i=0; i<colori.Count; i++)
+                    if((colori[i].ToString().Substring(7, colori[i].ToString().Length - 8) == (string)a[0]))
+                    {
+                        linee.Add(new Linea(colori[i]));
+                        comboBoxLinea.Items.Add(colori[i].ToString().Substring(7, colori[i].ToString().Length - 8));
+                        colori.RemoveAt(i);
+                    }
+            //qui deve leggere i link
+        }
+
+        private void DrawStation(int x, int y, string nome)
+        {
+            PictureBox picture = new PictureBox
+            {
+                Name = "pictureBox",
+                Size = new Size(50, 50),
+                Location = new Point(x, y),
+                BackgroundImage = Image.FromFile("42534-metro-icon.png"),
+                BackgroundImageLayout = ImageLayout.Zoom,
+            };
+            picture.MouseClick += stazioneClick;
+            picture.MouseDown += stazioneDownUp;
+            picture.MouseMove += stazioneMove;
+            picture.MouseUp += stazioneDownUp;
+            panel1.Controls.Add(picture);
+            picture.Tag = staz.Count;
+            staz.Add(new Stazione(x + 25, y + 25));
+            staz[staz.Count - 1].pic = picture;
+            Label a = new Label
+            {
+                Name = "labelA",
+                Location = new Point(x, y + 53),
+                Text = nome,
+                Font = new Font("Calibri", 8),
+                Size = new Size(50, 10),
+                TextAlign = ContentAlignment.MiddleCenter
+            };
+            panel1.Controls.Add(a);
+            staz[staz.Count - 1].lab = a;
         }
 
         private void panel1_Click(object sender, EventArgs e)
@@ -31,35 +99,10 @@ namespace MetropolitanaFinale2
             int y = Cursor.Position.Y - 140;
             if (createStation)
             {
-                PictureBox picture = new PictureBox
-                {
-                    Name = "pictureBox",
-                    Size = new Size(50, 50),
-                    Location = new Point(x, y),
-                    BackgroundImage = Image.FromFile("42534-metro-icon.png"),
-                    BackgroundImageLayout = ImageLayout.Zoom,
-                };
-                picture.MouseClick += stazioneClick;
-                picture.MouseDown += stazioneDownUp;
-                picture.MouseMove += stazioneMove;
-                picture.MouseUp += stazioneDownUp;
-                panel1.Controls.Add(picture);
-                picture.Tag = staz.Count;
-                staz.Add(new Stazione(x + 25, y + 25));
-                staz[staz.Count - 1].pic = picture;
+                DrawStation(x, y, "nome");
                 Dettagli det = new Dettagli(staz[staz.Count - 1]);
                 det.ShowDialog();
-                Label a = new Label
-                {
-                    Name = "labelA",
-                    Location = new Point(x, y + 53),
-                    Text = staz[staz.Count - 1].nome,
-                    Font = new Font("Calibri", 8),
-                    Size = new Size(50, 10),
-                    TextAlign = ContentAlignment.MiddleCenter
-                };
-                panel1.Controls.Add(a);
-                staz[staz.Count - 1].lab = a;
+                ((Label)staz[staz.Count - 1].lab).Text = staz[staz.Count - 1].nome;
             }
         }
 
@@ -287,6 +330,41 @@ namespace MetropolitanaFinale2
             Dettagli ddiasndwadn = new Dettagli(lin, colori);
             ddiasndwadn.ShowDialog();
             linee.Add(lin);
+        }
+
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            //qui deve salvare tutto tipo
+            Connessione.Close();
+        }
+
+        private void caricaMappe()
+        {
+            MySqlCommand comando = new MySqlCommand("SELECT Nome FROM mappa", Connessione);
+            MySqlDataAdapter adapt = new MySqlDataAdapter(comando);
+            DataTable dt = new DataTable();
+            adapt.Fill(dt);
+            foreach (DataRow a in dt.Rows)
+                comboBoxMappe.Items.Add(a[0]);
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            Dettagli det = new Dettagli(Connessione);
+            det.ShowDialog();
+            comboBoxMappe.Items.Clear();
+            caricaMappe();
+            comboBoxMappe.SelectedIndex = comboBoxMappe.Items.Count - 1;
+            staz.Clear();
+            linee.Clear();
+            colori = new List<Color> { Color.Black, Color.Gray, Color.Red, Color.Blue, Color.Cyan, Color.Brown, Color.Pink, Color.Purple, Color.Orange, Color.Green, Color.DarkSeaGreen, Color.LightGoldenrodYellow, Color.YellowGreen, Color.Violet, Color.Navy };
+            comboBoxLinea.Items.Clear();
+            disegnaStazioni();
+        }
+
+        private void comboBoxMappe_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            disegnaStazioni();
         }
     }
 }

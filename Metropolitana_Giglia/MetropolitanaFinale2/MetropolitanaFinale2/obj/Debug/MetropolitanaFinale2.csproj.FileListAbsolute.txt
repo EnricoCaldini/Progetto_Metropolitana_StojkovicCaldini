@@ -10,3 +10,5 @@ C:\Users\danil\Desktop\appunti franzi (4)\MetropolitanaFinale2\MetropolitanaFina
 C:\Users\danil\Desktop\appunti franzi (4)\MetropolitanaFinale2\MetropolitanaFinale2\obj\Debug\MetropolitanaFinale2.VisualStazione.resources
 C:\Users\danil\Desktop\appunti franzi (4)\MetropolitanaFinale2\MetropolitanaFinale2\obj\Debug\MetropolitanaFinale2.exe
 C:\Users\danil\Desktop\appunti franzi (4)\MetropolitanaFinale2\MetropolitanaFinale2\obj\Debug\MetropolitanaFinale2.pdb
+C:\Users\danil\Desktop\appunti franzi (4)\MetropolitanaFinale2\MetropolitanaFinale2\bin\Debug\MySql.Data.DLL
+C:\Users\danil\Desktop\appunti franzi (4)\MetropolitanaFinale2\MetropolitanaFinale2\obj\Debug\MetropolitanaFinale2.csproj.CopyComplete

@@ -7,12 +7,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using MySql.Data.MySqlClient;
 
 namespace MetropolitanaFinale2
 {
     public partial class Dettagli : Form
     {
-
+        MySqlConnection connessione;
         TextBox txtbx;
         ComboBox box;
         List<Color> listaColori;
@@ -60,6 +61,14 @@ namespace MetropolitanaFinale2
             Controls.Add(box);
         }
 
+        public Dettagli(MySqlConnection connessione)
+        {
+            InitializeComponent();
+            this.connessione = connessione;
+            switchint = 3;
+            funzione("Nome Mappa: ");
+        }
+
         private void funzione(string nomeLabel)
         {
             txtbx = new TextBox
@@ -83,28 +92,34 @@ namespace MetropolitanaFinale2
         private void btnConf_Click(object sender, EventArgs e)
         {
             if (txtbx != null && txtbx.Text == "")
-              MessageBox.Show("Compilare i campi");
+                MessageBox.Show("Compilare i campi");
             else
             {
-            switch (switchint)
-            {
-                case 0: ((Stazione)ogg).nome = txtbx.Text; break;
-                case 1:
-                    try
-                    {
-                        ((Link)ogg).dstnz = Convert.ToInt32(txtbx.Text);
-                    }
-                    catch
-                    {
-                        MessageBox.Show("Deve essere un intero");
-                        return;
-                    }
-                    break;
-                case 2:
-                    ((Linea)ogg).c = listaColori[box.SelectedIndex];
-                    listaColori.RemoveAt(box.SelectedIndex); break;
-            }
-            Close();
+                switch (switchint)
+                {
+                    case 0:
+                        ((Stazione)ogg).nome = txtbx.Text; break;
+                    case 1:
+                        try
+                        {
+                            ((Link)ogg).dstnz = Convert.ToInt32(txtbx.Text);
+                        }
+                        catch
+                        {
+                            MessageBox.Show("Deve essere un intero");
+                            return;
+                        }
+                        break;
+                    case 2:
+                        ((Linea)ogg).c = listaColori[box.SelectedIndex];
+                        listaColori.RemoveAt(box.SelectedIndex); break;
+                    case 3:
+                        MySqlCommand comando = new MySqlCommand("INSERT INTO mappa (Nome) VALUES ('" + txtbx.Text + "')", connessione);
+                        MySqlDataReader reader = comando.ExecuteReader();
+                        reader.Close();
+                        break;
+                }
+                Close();
             }
         }
     }
